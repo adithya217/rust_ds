@@ -1,5 +1,5 @@
-use super::utils::is_rotation_required;
-use super::utils::compute_min_rotation_count;
+use super::super::utils::is_rotation_required;
+use super::super::utils::compute_min_rotation_count;
 use std::ptr;
 
 pub fn rotate_using_storage<T: Clone>(arr: &mut [T], arr_size: usize, rotation_count: u32) {
@@ -8,23 +8,23 @@ pub fn rotate_using_storage<T: Clone>(arr: &mut [T], arr_size: usize, rotation_c
         return;
     }
 
-    let rotation_count = compute_min_rotation_count(&arr_size, &rotation_count) as usize;
-    let last_items = &mut arr[0..rotation_count].to_vec();
+    let rotation_count = compute_min_rotation_count(&arr_size, &rotation_count);
+    let start = (arr_size - rotation_count) as usize;
+    let end = arr_size as usize;
+    let last_items = &mut arr[start..end].to_vec();
 
     let start = rotation_count as usize;
     let end = arr_size as usize;
-    for index in start..end {
+    for index in (start..end).rev() {
         let ai = index - start;
         let bi = index;
         arr.swap(ai, bi);
     }
 
-    let start = arr_size as usize - last_items.len();
-    let end = arr_size as usize;
-    for index in (start..end).rev() {
+    for index in 0..last_items.len() {
         unsafe {
             let a: *mut T = &mut arr[index];
-            let b: *mut T = last_items.get_mut(index - start).expect("Element not found at index!");
+            let b: *mut T = last_items.get_mut(index).expect("Element not found at index!");
             ptr::swap(a, b);
         }
     }
@@ -39,8 +39,8 @@ mod tests {
         let mut data = [1,2,3,4,5,6,7,8];
         rotate(&mut data, 8, 2);
 
-        let expected = [3,4,5,6,7,8,1,2];
-        assert_eq!(data, expected)
+        let expected = [7,8,1,2,3,4,5,6];
+        assert_eq!(data, expected);
     }
 
     #[test]
@@ -48,17 +48,17 @@ mod tests {
         let mut data = [1,2,3,4,5,6,7];
         rotate(&mut data, 5, 2);
 
-        let expected = [3,4,5,1,2,6,7];
-        assert_eq!(data, expected)
+        let expected = [4,5,1,2,3,6,7];
+        assert_eq!(data, expected);
     }
 
     #[test]
-    fn rotate_using_storage_for_characters() {
+    fn rotate_using_storage_basic_for_characters() {
         let mut data = ['a','b','c','d','e','f','g'];
         rotate(&mut data, 7, 2);
 
-        let expected = ['c','d','e','f','g','a','b'];
-        assert_eq!(data, expected)
+        let expected = ['f','g','a','b','c','d','e'];
+        assert_eq!(data, expected);
     }
 
     #[test]
@@ -67,7 +67,7 @@ mod tests {
         rotate(&mut data, 3, 3);
 
         let expected = ['a','b','c','d'];
-        assert_eq!(data, expected)
+        assert_eq!(data, expected);
     }
 
     #[test]
@@ -76,7 +76,7 @@ mod tests {
         rotate(&mut data, 0, 2);
 
         let expected = ['a','b','c','d'];
-        assert_eq!(data, expected)
+        assert_eq!(data, expected);
     }
 
     #[test]
@@ -85,7 +85,7 @@ mod tests {
         rotate(&mut data, 4, 0);
 
         let expected = ['a','b','c','d'];
-        assert_eq!(data, expected)
+        assert_eq!(data, expected);
     }
 
     #[test]
@@ -94,7 +94,7 @@ mod tests {
         rotate(&mut data, 3, 2);
 
         let expected: [u8; 0] = [];
-        assert_eq!(data, expected)
+        assert_eq!(data, expected);
     }
 
     #[test]
@@ -102,7 +102,7 @@ mod tests {
         let mut data = [1,2,3,4,5,6,7];
         rotate(&mut data, 7, 9);
 
-        let expected = [3,4,5,6,7,1,2];
-        assert_eq!(data, expected)
+        let expected = [6,7,1,2,3,4,5];
+        assert_eq!(data, expected);
     }
 }

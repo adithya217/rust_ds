@@ -1,9 +1,8 @@
-use super::utils::is_rotation_required;
-use super::utils::compute_min_rotation_count;
+use super::super::utils::is_rotation_required;
+use super::super::utils::compute_min_rotation_count;
 use crate::math::gcd::compute_euclidean_gcd;
-use std::ptr;
 
-pub fn rotate_by_juggling<T: Clone>(arr: &mut [T], arr_size: usize, rotation_count: u32) {
+pub fn rotate_using_juggling<T>(arr: &mut [T], arr_size: usize, rotation_count: u32) {
     let arr_size = arr_size as u32;
     if arr.len() == 0 || !is_rotation_required(&arr_size, &rotation_count) {
         return;
@@ -27,7 +26,7 @@ pub fn rotate_by_juggling<T: Clone>(arr: &mut [T], arr_size: usize, rotation_cou
 
 #[cfg(test)]
 mod tests {
-    use super::rotate_by_juggling as rotate;
+    use super::rotate_using_juggling as rotate;
 
     #[test]
     fn rotate_using_juggling_for_numbers() {
@@ -35,7 +34,7 @@ mod tests {
         rotate(&mut data, 8, 2);
 
         let expected = [3,4,5,6,7,8,1,2];
-        assert_eq!(data, expected)
+        assert_eq!(data, expected);
     }
 
     #[test]
@@ -44,7 +43,7 @@ mod tests {
         rotate(&mut data, 5, 2);
 
         let expected = [3,4,5,1,2,6,7];
-        assert_eq!(data, expected)
+        assert_eq!(data, expected);
     }
 
     #[test]
@@ -53,7 +52,7 @@ mod tests {
         rotate(&mut data, 7, 2);
 
         let expected = ['c','d','e','f','g','a','b'];
-        assert_eq!(data, expected)
+        assert_eq!(data, expected);
     }
 
     #[test]
@@ -62,7 +61,7 @@ mod tests {
         rotate(&mut data, 3, 3);
 
         let expected = ['a','b','c','d'];
-        assert_eq!(data, expected)
+        assert_eq!(data, expected);
     }
 
     #[test]
@@ -71,7 +70,7 @@ mod tests {
         rotate(&mut data, 0, 2);
 
         let expected = ['a','b','c','d'];
-        assert_eq!(data, expected)
+        assert_eq!(data, expected);
     }
 
     #[test]
@@ -80,7 +79,7 @@ mod tests {
         rotate(&mut data, 4, 0);
 
         let expected = ['a','b','c','d'];
-        assert_eq!(data, expected)
+        assert_eq!(data, expected);
     }
 
     #[test]
@@ -89,7 +88,7 @@ mod tests {
         rotate(&mut data, 3, 2);
 
         let expected: [u8; 0] = [];
-        assert_eq!(data, expected)
+        assert_eq!(data, expected);
     }
 
     #[test]
@@ -98,7 +97,7 @@ mod tests {
         rotate(&mut data, 7, 9);
 
         let expected = [3,4,5,6,7,1,2];
-        assert_eq!(data, expected)
+        assert_eq!(data, expected);
     }
 
     #[test]
@@ -107,7 +106,7 @@ mod tests {
         rotate(&mut data, 5, 1);
 
         let expected = [2,3,4,5,1,6,7];
-        assert_eq!(data, expected)
+        assert_eq!(data, expected);
     }
 
     #[test]
@@ -116,6 +115,6 @@ mod tests {
         rotate(&mut data, 5, 3);
 
         let expected = [4,5,1,2,3,6,7];
-        assert_eq!(data, expected)
+        assert_eq!(data, expected);
     }
 }
