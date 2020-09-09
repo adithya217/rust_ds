@@ -1,1 +1,2 @@
-mod sub_array_with_given_sum;
+mod sub_array_with_given_sum_v1;
+mod sub_array_with_given_sum_v2;
