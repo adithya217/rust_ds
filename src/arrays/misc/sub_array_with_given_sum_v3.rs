@@ -1,28 +1,32 @@
-use std::collections::HashMap;
+use super::utils::find_smallest_negative_number;
 
-pub fn find_from_mixed_numbers_v1(arr: &[i32], target: i32) -> (i32, i32) {
-    if arr.len() == 1 {
-        if arr[0] == target { return (0, 0); } else { return(-1, -1); }
-    }
+// This algorithm doesn't work, refer the test cases.
+pub fn find_from_mixed_numbers_v2(arr: &[i32], target: i32) -> (i32, i32) {
+    if arr[0] == target { return (0, 0); }
 
-    let mut data_map: HashMap<i32, i32> = HashMap::new();
-    let mut sum: i32 = 0;
+    let offset = match find_smallest_negative_number(arr) {
+        None => 0,
+        Some((&number, _)) => number.abs()
+    };
 
-    for (index, number) in arr.iter().enumerate() {
-        let index = index as i32;
-        sum += number;
+    let mut start_index: i32 = 0;
+    let mut sum: i32 = arr[0] + offset;
+    let mut modified_target: i32 = target + offset;
 
-        if sum == target {
-            return (0, index);
+    for index in 1..arr.len() {
+        sum += arr[index] + offset;
+        modified_target += offset;
+
+        // Problem 1: If we compare sum > target, it will always be true when target is negative
+        while (sum > modified_target) && ((start_index as usize) < index) {
+            sum -= arr[start_index as usize] + offset;
+            start_index += 1;
+            modified_target -= offset;
         }
 
-        let sum_diff = sum - target;
-        match data_map.get(&sum_diff) {
-            Some(&prev_index) => return (prev_index + 1, index),
-            None => {}
+        if sum == modified_target {
+            return (start_index, index as i32);
         }
-
-        data_map.insert(sum, index);
     }
 
     return (-1, -1);
@@ -30,7 +34,7 @@ pub fn find_from_mixed_numbers_v1(arr: &[i32], target: i32) -> (i32, i32) {
 
 #[cfg(test)]
 mod tests {
-    use super::find_from_mixed_numbers_v1 as compute;
+    use super::find_from_mixed_numbers_v2 as compute;
 
     #[test]
     fn test_with_positive_set1_will_find() {
@@ -68,6 +72,7 @@ mod tests {
         assert_eq!(4, end_index);
     }
 
+    // This test will fail because the algorithm is not correct.
     #[test]
     fn test_with_positive_set5_will_find() {
         let test_data = [10, 2, -2, -20, 10];
@@ -93,15 +98,6 @@ mod tests {
 
         assert_eq!(1, start_index);
         assert_eq!(1, end_index);
-    }
-
-    #[test]
-    fn test_with_positive_set8_will_find() {
-        let test_data = [-1, -1, 1];
-        let (start_index, end_index) = compute(&test_data, 0);
-
-        assert_eq!(1, start_index);
-        assert_eq!(2, end_index);
     }
 
     #[test]

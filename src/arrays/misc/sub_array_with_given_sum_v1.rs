@@ -8,7 +8,7 @@ pub fn find_from_positive_numbers(arr: &[i32], target: i32) -> (i32, i32) {
     for index in 1..arr.len() {
         sum += arr[index];
 
-        while (sum > target) && (start_index < index as i32) {
+        while (sum > target) && ((start_index as usize) < index) {
             sum -= arr[start_index as usize];
             start_index += 1;
         }
