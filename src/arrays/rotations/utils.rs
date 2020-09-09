@@ -33,3 +33,7 @@ pub fn swap_blocks<T>(arr: &mut [T], a_offset: usize, b_offset: usize, count: us
         arr.swap(a_index, b_index);
     }
 }
+
+pub fn find_pivot<T: Ord>(arr: &[T], arr_size: &usize, is_ascending: bool) {
+ // TODO
+}
