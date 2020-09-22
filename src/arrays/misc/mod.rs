@@ -8,3 +8,4 @@ mod missing_number_in_array;
 mod sort_separate_arrays;
 mod rearrange_alternatively;
 mod number_of_pairs;
+mod three_color_sort;
