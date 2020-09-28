@@ -1,9 +1,15 @@
 
 use std::vec::Vec;
 
-pub fn find_count(arrivals: &[u32], departures: &[u32]) -> Result<usize, String> {
+#[derive(Debug)]
+#[derive(PartialEq)]
+pub enum ErrorMsg {
+    ArrivalsDeparturesCountNotMatching
+}
+
+pub fn find_count(arrivals: &[u32], departures: &[u32]) -> Result<usize, ErrorMsg> {
     if arrivals.len() != departures.len() {
-        return Err(String::from("Arrivals and Departures count must be the same!"));
+        return Err(ErrorMsg::ArrivalsDeparturesCountNotMatching);
     }
 
     if arrivals.is_empty() {
@@ -36,6 +42,7 @@ pub fn find_count(arrivals: &[u32], departures: &[u32]) -> Result<usize, String>
 #[cfg(test)]
 mod tests {
     use super::find_count as compute;
+    use super::ErrorMsg as ErrorMsg;
 
     #[test]
     fn test_with_multiple_different_arrivals_results_in_multiple_platforms() {
@@ -73,9 +80,8 @@ mod tests {
     fn test_with_different_count_of_arrivals_departures_results_in_error() {
         let arrivals = [0900, 1000];
         let departures = [0930];
-        let expected = Err(String::from("Arrivals and Departures count must be the same!"));
 
-        assert_eq!(expected, compute(&arrivals, &departures));
+        assert_eq!(Err(ErrorMsg::ArrivalsDeparturesCountNotMatching), compute(&arrivals, &departures));
     }
 
     #[test]
