@@ -77,4 +77,12 @@ mod tests {
 
         assert_eq!(expected, compute(&arrivals, &departures));
     }
+
+    #[test]
+    fn test_with_multiple_different_unsorted_arrivals_results_in_multiple_platforms() {
+        let arrivals = [0950, 1100, 1500, 1800, 0900, 0940];
+        let departures = [1120, 1130, 1900, 2000, 0910, 1200];
+
+        assert_eq!(Ok(3), compute(&arrivals, &departures));
+    }
 }
