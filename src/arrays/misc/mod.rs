@@ -11,3 +11,4 @@ mod number_of_pairs;
 mod three_color_sort;
 mod equilibrium_point;
 mod leaders_in_array;
+mod minimum_platforms;
