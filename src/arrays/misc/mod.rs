@@ -13,3 +13,4 @@ mod equilibrium_point;
 mod leaders_in_array;
 mod minimum_platforms;
 mod reverse_array_in_groups;
+mod rain_water_traps;
