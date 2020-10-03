@@ -16,3 +16,4 @@ mod reverse_array_in_groups;
 mod rain_water_traps;
 mod chocolate_distribution;
 mod stock_trade;
+mod first_sorted_middle_element;
