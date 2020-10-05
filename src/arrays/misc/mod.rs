@@ -20,3 +20,4 @@ mod first_sorted_middle_element;
 mod arrange_zig_zag;
 mod last_index;
 mod spiral_traverse_matrix;
+mod arrange_largest_number;
