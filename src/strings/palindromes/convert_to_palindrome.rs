@@ -16,8 +16,8 @@ pub fn compute_min_insert_count(src: &str) -> Option<usize> {
 
     let letters: Vec<char> = src.chars().collect();
 
-    if max_palindrome_size > 0 {
-        return Some(letters.len() - max_palindrome_size);
+    if max_palindrome_size == letters.len() {
+        return Some(0);
     }
 
     let mut left = 0;
@@ -27,12 +27,10 @@ pub fn compute_min_insert_count(src: &str) -> Option<usize> {
         right -= 1;
     }
 
-    // Else case is size of non-palindromic part of string - 1
-    let min_insert_count = if left > right { 0 } else { right - left };
-    return Some(min_insert_count);
+    return Some(right - left + 1 - max_palindrome_size);
 }
 
-#[cfg(tests)]
+#[cfg(test)]
 mod tests {
     use super::compute_min_insert_count as compute;
 
@@ -81,14 +79,14 @@ mod tests {
     #[test]
     fn test_with_odd_sized_palindrome_in_middle_of_even_sized_string() {
         let input = "xybabz";
-        let expected = Some(1);
+        let expected = Some(3);
         assert_eq!(expected, compute(input));
     }
 
     #[test]
     fn test_with_odd_sized_palindrome_at_end_of_even_sized_string() {
         let input = "xyzbab";
-        let expected = Some(2);
+        let expected = Some(3);
         assert_eq!(expected, compute(input));
     }
 

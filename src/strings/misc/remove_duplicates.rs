@@ -20,7 +20,7 @@ pub fn remove(src: &str) -> String {
     return unique_chars.iter().collect();
 }
 
-#[cfg(tests)]
+#[cfg(test)]
 mod tests {
     use super::remove as compute;
 
@@ -41,14 +41,14 @@ mod tests {
     #[test]
     fn test_with_no_repetitions() {
         let input = "cwm fjord veg balks nth pyx quiz";
-        let expected = "cwm fjord veg balks nth pyx quiz";
+        let expected = "cwm fjordvegbalksnthpyxquiz";
         assert_eq!(expected, compute(&input));
     }
 
     #[test]
     fn test_with_repetitions() {
         let input = "hello there";
-        let expected = "helo thr";
+        let expected = "helo tr";
         assert_eq!(expected, compute(&input));
     }
 }

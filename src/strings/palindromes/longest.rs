@@ -33,12 +33,12 @@ pub fn find_longest(word: &str) -> Option<(usize, usize)> {
 
 fn find_palindrome(letters: &Vec<char>, start: usize, end: usize) -> (usize, usize, usize) {
     let left_bound = 0;
-    let right_bound = letters.len() - 1;
-    let mut left = start;
-    let mut right = end;
+    let right_bound = (letters.len() - 1) as i32;
+    let mut left = start as i32;
+    let mut right = end as i32;
 
     while left >= left_bound && right <= right_bound {
-        if letters.get(left).as_deref() != letters.get(right).as_deref() {
+        if letters.get(left as usize).as_deref() != letters.get(right as usize).as_deref() {
             break;
         }
 
@@ -49,10 +49,10 @@ fn find_palindrome(letters: &Vec<char>, start: usize, end: usize) -> (usize, usi
     left += 1;
     right -= 1;
 
-    return (right - left + 1, left, right);
+    return ((right - left + 1) as usize, left as usize, right as usize);
 }
 
-#[cfg(tests)]
+#[cfg(test)]
 mod tests {
     use super::find_longest as compute;
 

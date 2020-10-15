@@ -68,10 +68,10 @@ pub fn compute_value(roman_number: &str) -> Option<u32> {
     }
 
     let letters: Vec<char> = roman_number.chars().rev().collect();
-    let mut prev_value = RomanNumeral::get_from_char(letters[0]).unwrap().get_value();
+    let mut prev_value = 0;
     let mut total_value = prev_value as u32;
 
-    for index in 1..letters.len() {
+    for index in 0..letters.len() {
         let curr_value = RomanNumeral::get_from_char(letters[index]).unwrap().get_value();
         if curr_value >= prev_value {
             total_value += curr_value as u32;
@@ -85,7 +85,7 @@ pub fn compute_value(roman_number: &str) -> Option<u32> {
     return Some(total_value);
 }
 
-#[cfg(tests)]
+#[cfg(test)]
 mod tests {
     use super::compute_value as compute;
 
@@ -134,7 +134,7 @@ mod tests {
     #[test]
     fn test_with_decreasing_then_increasing_roman_numeral_string() {
         let input = "XLXIX";
-        let expected = Some(49);
+        let expected = Some(59);
         assert_eq!(expected, compute(input));
     }
 
