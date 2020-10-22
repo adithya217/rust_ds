@@ -1,120 +1,97 @@
 
-#[derive(PartialEq, Debug)]
-pub struct Node<'a> {
-    data: i32,
-    next: Option<&'a Node<'a>>
-}
+// use super::list::List;
+// use std::cell::{Ref};
 
-pub fn find_middle<'a>(head: &'a Node) -> &'a Node<'a> {
-     if head.next == None {
-         return head;
-     }
+// impl<T> List<T> {
+//     pub fn peek_middle(&self) -> Option<Ref<T>> {
+//         if self.len() <= 1 {
+//             return self.peek_first();
+//         }
 
-     let mut slow = Some(head);
-     let mut fast = Some(head);
+//         return None;
+//     }
+// }
 
-     while fast.unwrap().next != None {
-         fast = fast.unwrap().next;
-         slow = slow.unwrap().next;
+// pub fn find_middle(list: &List<i32>) -> Ref<> {
+//      if list.len() <= 1 {
+//          return head;
+//      }
 
-         if fast.unwrap().next == None {
-             break;
-         }
+//      let mut slow = Some(head);
+//      let mut fast = Some(head);
 
-         fast = fast.unwrap().next;
-     }
+//      while fast.unwrap().get_next() != None {
+//          fast = fast.unwrap().get_next();
+//          slow = slow.unwrap().get_next();
 
-     return slow.unwrap();
-}
+//          if fast.unwrap().get_next() == None {
+//              break;
+//          }
 
-#[cfg(test)]
-mod tests {
-    use super::Node as Node;
-    use super::find_middle as compute;
+//          fast = fast.unwrap().get_next();
+//      }
 
-    #[test]
-    fn find_middle_of_single_linked_list() {
-        let input = Node {
-            data: 1,
-            next: None
-        };
-        let expected = &input;
-        assert_eq!(expected, compute(&input));
-    }
+//      return slow.unwrap();
+// }
 
-    #[test]
-    fn find_middle_of_small_odd_sized_linked_list() {
-        let input = Node {
-            data: 1,
-            next: Some(&Node {
-                data: 2,
-                next: Some(&Node {
-                    data: 3,
-                    next: None
-                })
-            })
-        };
-        let expected = input.next.unwrap();
-        assert_eq!(expected, compute(&input));
-    }
+// #[cfg(test)]
+// mod tests {
+//     use super::Node as Node;
+//     use super::find_middle as compute;
 
-    #[test]
-    fn find_middle_of_small_medium_sized_linked_list() {
-        let input = Node {
-            data: 1,
-            next: Some(&Node {
-                data: 2,
-                next: Some(&Node {
-                    data: 3,
-                    next: Some(&Node {
-                        data: 4,
-                        next: Some(&Node {
-                            data: 5,
-                            next: None
-                        })
-                    })
-                })
-            })
-        };
-        let expected = input.next.unwrap().next.unwrap();
-        assert_eq!(expected, compute(&input));
-    }
+//     #[test]
+//     fn find_middle_of_single_linked_list() {
+//         let input = Node::new(1, None);
+//         let expected = &1;
+//         let result = compute(input).get_data();
+//         assert_eq!(expected, result);
+//     }
 
-    #[test]
-    fn find_middle_of_small_even_sized_linked_list() {
-        let input = Node {
-            data: 1,
-            next: Some(&Node {
-                data: 2,
-                next: None
-            })
-        };
-        let expected = input.next.unwrap();
-        assert_eq!(expected, compute(&input));
-    }
+//     #[test]
+//     fn find_middle_of_small_odd_sized_linked_list() {
+//         let third = Node::new(3, None);
+//         let second = Node::new(2, Some(third));
+//         let input = Node::new(1, Some(second));
+        
+//         let expected = &2;
+//         let result = compute(input).get_data();
+//         assert_eq!(expected, result);
+//     }
 
-    #[test]
-    fn find_middle_of_big_even_sized_linked_list() {
-        let input = Node {
-            data: 1,
-            next: Some(&Node {
-                data: 2,
-                next: Some(&Node {
-                    data: 3,
-                    next: Some(&Node {
-                        data: 4,
-                        next: Some(&Node {
-                            data: 5,
-                            next: Some(&Node {
-                                data: 6,
-                                next: None
-                            })
-                        })
-                    })
-                })
-            })
-        };
-        let expected = input.next.unwrap().next.unwrap().next.unwrap();
-        assert_eq!(expected, compute(&input));
-    }
-}
+//     #[test]
+//     fn find_middle_of_medium_odd_sized_linked_list() {
+//         let fifth = Node::new(5, None);
+//         let fourth = Node::new(4, Some(fifth));
+//         let third = Node::new(3, Some(fourth));
+//         let second = Node::new(2, Some(third));
+//         let input = Node::new(1, Some(second));
+
+//         let expected = &3;
+//         let result = compute(input).get_data();
+//         assert_eq!(expected, result);
+//     }
+
+//     #[test]
+//     fn find_middle_of_small_even_sized_linked_list() {
+//         let second = Node::new(2, None);
+//         let input = Node::new(1, Some(second));
+
+//         let expected = &2;
+//         let result = compute(input).get_data();
+//         assert_eq!(expected, result);
+//     }
+
+//     #[test]
+//     fn find_middle_of_big_even_sized_linked_list() {
+//         let sixth = Node::new(6, None);
+//         let fifth = Node::new(5, Some(sixth));
+//         let fourth = Node::new(4, Some(fifth));
+//         let third = Node::new(3, Some(fourth));
+//         let second = Node::new(2, Some(third));
+//         let input = Node::new(1, Some(second));
+
+//         let expected = &4;
+//         let result = compute(input).get_data();
+//         assert_eq!(expected, result);
+//     }
+// }
